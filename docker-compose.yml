@@ -1,0 +1,24 @@
+# This docker-compose file is used only for production server
+
+version: '3.3'
+ 
+services:
+  redis:
+    image: redis:latest
+    command: redis-server
+    ports: 
+      - '6379:6379'
+
+  app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./channeldemo:/channeldemo
+    command: >
+      sh -c "
+             python3 manage.py migrate &&
+             python3 manage.py runserver 0.0.0.0:8000"
+    links:
+      - redis

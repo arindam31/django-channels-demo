@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>This is the Index page</h1>
+<script>
+  const wsInstance = new WebSocket('ws://' + window.location.host + '/realtime/');
+  wsInstance.onmessage = (message) => {
+    console.log(message.data)
+  }
+</script>
+{% endblock content %}
